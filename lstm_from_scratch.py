@@ -85,7 +85,7 @@ labels = torch.tensor([0., 1.])
 dataset = TensorDataset(inputs, labels)
 dataloader = DataLoader(dataset)
 
-EPOCHS = 3000
+EPOCHS = 5000
 
 optimizer = model.configure_optimizers()
 
@@ -124,4 +124,11 @@ print("Company A: Observed = 0, Predicted = ",
         model(torch.tensor([0., 0.5, 0.25, 1.])).detach())
 print("Company B: Observed = 1, Predicted = ",
         model(torch.tensor([1., 0.5, 0.25, 1.])).detach())
+
+pred_0 = model(torch.tensor([0., 0.5, 0.25, 1.])).detach()
+
+torch.save(model.state_dict(), f"lstm_scratch_model_{pred_0}.pth")
+
+for name, param in model.named_parameters():
+    print(f"{name:10} | shape: {param.shape} | value: {param.data}")
 
